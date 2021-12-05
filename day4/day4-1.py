@@ -53,12 +53,11 @@ with open("input4.txt", 'r') as f:
         board[row,col] = -1
         if np.all(board[row,:] == -1) or np.all(board[:,col] == -1):
           winning_boards[ii] = 1
-          if squid_win:
-            if np.all(winning_boards==1):
-              winning_val = draw
-              winning_board = board[board>=0]
-              print (f"The last board has won on value {winning_val}...")
-              break
+          if np.all(winning_boards==1) and squid_win:
+            winning_val = draw
+            winning_board = board[board>=0]
+            print (f"The last board has won on value {winning_val}...")
+            break
           else:
             winning_val = draw
             winning_board = board[board>=0]
