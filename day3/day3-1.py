@@ -36,14 +36,13 @@ with open('input3.txt', 'rb') as f:
   print(f"Product of gamma and epsilon rates is {gamma_rate*epsilon_rate}")
 
   f.seek(0)
-  # find the oxygen rate
+  # find the oxygen and c02 rate
   oxy_nums =[]
-  co2_nums = []
-  remove_me = []
+  c02_nums = []
   for line in f:
     val = int(line.strip(), 2)
     oxy_nums.append(val)
-    co2_nums.append(val)
+    c02_nums.append(val)
 
   for ii in range(max_bits-1,-1,-1):
     #find most common bit
@@ -54,13 +53,13 @@ with open('input3.txt', 'rb') as f:
       avg = 1 if avg/len(oxy_nums) >= 0.5 else 0
       oxy_nums = [val for val in oxy_nums if val & 2**ii == 2**ii*avg]
     
-    if len(co2_nums) != 1:
+    if len(c02_nums) != 1:
       avg = 0
-      for val in co2_nums:
+      for val in c02_nums:
         avg += (val & 2**ii)/2**ii
-      avg = 0 if avg/len(co2_nums) >= 0.5 else 1
-      co2_nums = [val for val in co2_nums if val & 2**ii == 2**ii*avg]
+      avg = 0 if avg/len(c02_nums) >= 0.5 else 1
+      c02_nums = [val for val in c02_nums if val & 2**ii == 2**ii*avg]
 
-  print(f"Product oxygen and c02 is {oxy_nums[0]*co2_nums[0]}")
+  print(f"Product oxygen and c02 is {oxy_nums[0]*c02_nums[0]}")
 
       
