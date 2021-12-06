@@ -8,8 +8,6 @@ with open("input5.txt",'r') as f:
   f.seek(0)
   for ii, line in enumerate(f):
     coords = [int(s) for s in re.findall(r'\d+', line)]
-    # ords[0][ii,:] = np.min([coords[0],coords[2]]),np.max([coords[0],coords[2]])
-    # ords[1][ii,:] = np.min([coords[1],coords[3]]),np.max([coords[1],coords[3]])
     ords[0][ii,:] = coords[0],coords[2]
     ords[1][ii,:] = coords[1],coords[3]
 
@@ -20,14 +18,12 @@ map = np.zeros((np.max(ords[0])+1,np.max(ords[1])+1))
 diagonals = True
 
 for ii in range(num_lines):
-  x1 = ords[0][ii,0]
-  x2 = ords[0][ii,1]
-  y1 = ords[1][ii,0]
-  y2 = ords[1][ii,1]
+  x1, x2 = ords[0][ii,:]
+  y1, y2 = ords[1][ii,:]
   if x1 == x2:
-    map[x1 , np.min(ords[1][ii,:]):np.max(ords[1][ii,:])+1] += 1 
+    map[x1 , np.min([y1,y2]):np.max([y1,y2])+1] += 1 
   if y1 == y2:
-    map[np.min(ords[0][ii,:]):np.max(ords[0][ii,:])+1 , y1] += 1 
+    map[np.min([x1,x2]):np.max([x1,x2])+1 , y1] += 1 
 
   # find if a line is diagonal with gradient 1 or -1
   gradient = (y2-y1)/(x2-x1)
